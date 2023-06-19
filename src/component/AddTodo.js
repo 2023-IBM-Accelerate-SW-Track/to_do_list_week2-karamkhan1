@@ -7,6 +7,9 @@ class AddTodo extends Component {
     super();
     this.state = {
       content: "",
+      preCond: "",
+      acceptCriteria: "",
+      date: "",
     };
   }
   // The handleChange function updates the react state with the new input value provided from the user.
@@ -28,6 +31,8 @@ class AddTodo extends Component {
       this.props.addTodo(this.state);
       this.setState({
         content: "",
+        preCond: "",
+        acceptCriteria: "",
         date: "",
       });
     }
@@ -43,10 +48,27 @@ class AddTodo extends Component {
       // 4. The value of the text field also should reflect the local state of this component.
       <div>
         <TextField
+          name = "task"
           label="Add New Item"
           variant="outlined"
           onChange={this.handleChange}
           value={this.state.content}
+        />
+        <TextField
+          name = "preCond"
+          style={{ marginLeft: "10px" }}
+          label="Pre-Conditions"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.preCond}
+        />
+        <TextField
+          name = "acceptCriteria"
+          style={{ marginLeft: "10px" }}
+          label="Acceptance Criteria"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.acceptCriteria}
         />
         <Button
           style={{ marginLeft: "10px" }}
