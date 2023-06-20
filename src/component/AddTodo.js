@@ -27,9 +27,8 @@ class AddTodo extends Component {
   // in the Home.js file which then adds the input into the list.
   handleSubmit = (event) => {
     event.preventDefault();
-    let currDate = Date().toLocaleString('en-US');
     if (this.state.content.trim()) {
-      this.setState({ date: currDate, }, () => {
+      this.setState({ date: new Date().toLocaleString('en-US'), }, () => {
         this.props.addTodo(this.state);
         this.setState({
           content: "",
