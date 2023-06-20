@@ -7,9 +7,9 @@ class AddTodo extends Component {
     super();
     this.state = {
       content: "",
-      preCond: "",
-      acceptCriteria: "",
       date: "",
+      preCondition: "",
+      acceptanceCriteria: "",
     };
   }
   // The handleChange function updates the react state with the new input value provided from the user.
@@ -17,8 +17,8 @@ class AddTodo extends Component {
   // into the text field.
   handleChange = (event) => {
     this.setState({
-      content: event.target.value,
-      date: Date().toLocaleString('en-US'),
+      ...this.state,
+      [event.target.id]: event.target.value
     });
   };
   // The handleSubmit function collects the forms input and puts it into the react state.
@@ -27,13 +27,16 @@ class AddTodo extends Component {
   // in the Home.js file which then adds the input into the list.
   handleSubmit = (event) => {
     event.preventDefault();
+    let currDate = Date().toLocaleString('en-US');
     if (this.state.content.trim()) {
-      this.props.addTodo(this.state);
-      this.setState({
-        content: "",
-        preCond: "",
-        acceptCriteria: "",
-        date: "",
+      this.setState({ date: currDate, }, () => {
+        this.props.addTodo(this.state);
+        this.setState({
+          content: "",
+          date: "",
+          preCondition: "",
+          acceptanceCriteria: "",
+        });
       });
     }
   };
@@ -48,27 +51,27 @@ class AddTodo extends Component {
       // 4. The value of the text field also should reflect the local state of this component.
       <div>
         <TextField
-          name = "task"
+          id = "content"
           label="Add New Item"
           variant="outlined"
           onChange={this.handleChange}
           value={this.state.content}
         />
         <TextField
-          name = "preCond"
+          id = "preCondition"
           style={{ marginLeft: "10px" }}
           label="Pre-Conditions"
           variant="outlined"
           onChange={this.handleChange}
-          value={this.state.preCond}
+          value={this.state.preCondition}
         />
         <TextField
-          name = "acceptCriteria"
+          id = "acceptanceCriteria"
           style={{ marginLeft: "10px" }}
           label="Acceptance Criteria"
           variant="outlined"
           onChange={this.handleChange}
-          value={this.state.acceptCriteria}
+          value={this.state.acceptanceCriteria}
         />
         <Button
           style={{ marginLeft: "10px" }}

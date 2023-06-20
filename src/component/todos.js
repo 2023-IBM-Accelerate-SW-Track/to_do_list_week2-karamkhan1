@@ -1,6 +1,6 @@
 import React from "react";
 import "../component/todos.css";
-import { Card, Grid, ListItemButton, ListItemText, Checkbox, CardContent, Typography } from "@mui/material";
+import { Card, Grid, ListItemButton, ListItemText, Checkbox, Box } from "@mui/material";
 
 // 1. This component formats and returns the list of todos.
 // 2. Treat the question mark like an if statement.
@@ -18,20 +18,16 @@ const Todos = ({ todos, deleteTodo }) => {
             {/* Remember, we set the local state of this todo item when the user submits the form in 
             AddTodo.js. All we need to do is return the todo list item {todo.content} */}
             <ListItemButton component="a" href="#simple-list">
-              <Checkbox style={{paddingLeft:0}} color="primary" onClick={() => deleteTodo(todo.id)}></Checkbox>
+              <Checkbox style={{paddingLeft:0}} color="primary" onClick={() => deleteTodo(todo.id)} aria-label="Delete Task" data-testid="delete-task"/>
               <ListItemText primary={todo.content} secondary={todo.date}/>
+              <ListItemText primary={todo.content} secondary={
+                <Box component="span" dangerouslySetInnerHTML={{
+                  __html: `Date: ${todo.date}` +
+                    (todo.preCondition ? `<br/>Pre-Condition: ${todo.preCondition}` : '') +
+                    (todo.acceptanceCriteria ? `<br/>Acceptance Criteria: ${todo.acceptanceCriteria}` : '')
+                }} />
+              } style={{ wordWrap: "break-word" }} />
             </ListItemButton>
-            {(todo.preCond.trim() || todo.acceptCriteria.trim()) &&
-                <CardContent>
-                  {todo.preCond.trim() &&
-                    <Typography variant="subtitle1">Pre-Condition: {todo.preCond}</Typography>
-                  }
-
-                  {todo.acceptCriteria.trim() &&
-                    <Typography variant="subtitle1">Acceptance Criteria: {todo.acceptCriteria}</Typography>
-                  }
-                </CardContent>
-              }
           </Card>
         </Grid>
       );
